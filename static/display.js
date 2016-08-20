@@ -2,7 +2,7 @@ function initMap() {
         var mapDiv = document.getElementById('map');
         var map = new google.maps.Map(mapDiv, {
             center: {lat: 44.540, lng: -78.546}, //This is how it focuses on a specific geo location. This is currently set to Sydney
-            zoom: 8
+            zoom: 8,
 			styles: [[{featureType:"administrative",
 						elementType:"all",
 						stylers:[{visibility:"on"}]
