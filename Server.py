@@ -1,6 +1,19 @@
 import json
 from bottle import route, run, static_file, get, post, request, redirect, os
 
+class suburb(object):
+	def _init_(self,name,price,region):
+		self.name = name
+		self.price = price
+		self.region = region
+		
+class region(object):
+	def _init_(self,name,suburbs):
+		self.name = name
+		self.suburbs = suburbs
+		self.minprice = int(float('inf'))
+		self.maxprice = 0
+
 @route('/')
 def route_to_index():
 	redirect('static/index.html')
@@ -17,21 +30,16 @@ def api_region(region):
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
-def prices_to_colours(District):
-
-    var max_price
-    var min_price
-
-    var suburb_price
-
-    var col_modifier = 255 * (suburb_price - min_price) / (max_price - min_price)
-
-    var red = 0 + col_modifier
-    var blue_modifier = red / 100
-    var blue = abs(255 - col_modifier * blue_modifier)
-    var green = red < blue ? blue - red : blue
-
-    return red + "," + green + "," + blue
+#def region_to_colourmap(region):
+	
+	
+#def suburb_to_colour(suburb):
+#    col_modifier = 255 * (suburb.price - min_price) / (max_price - min_price)
+#    red = 0 + col_modifier
+#    blue_modifier = red / 100
+#    blue = abs(255 - col_modifier * blue_modifier)
+#    green = red < blue ? blue - red : blue
+#    return red + "," + green + "," + blue
 
 
 def list_all_regions():
