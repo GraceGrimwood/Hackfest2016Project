@@ -83,13 +83,7 @@ def parse_region(region):
 
 		print(keys)
 
-<<<<<<< HEAD
-        for k in range(len(keys)):
-            keys[k] = keys[k].replace("\"", "")   #Remove quotes around string
-            keys[k] = keys[k].replace("\n", "")
 
-        suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
-=======
 		for k in range(len(keys)):
 			keys[k] = keys[k].replace("\"", "")	#Remove quotes around string
 			keys[k] = keys[k].replace("\n", "")
@@ -99,7 +93,6 @@ def parse_region(region):
 		print(keys)
 
 		suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
->>>>>>> colour
         'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
         'Capital Value Date': keys[4]}
 		suburb_list.append(suburb_info)
