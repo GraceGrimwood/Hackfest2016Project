@@ -26,7 +26,7 @@ def api_regions():
 def api_region(region):
 	return parse_region(region)
 
-@route('/static/<filename>')
+@route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
