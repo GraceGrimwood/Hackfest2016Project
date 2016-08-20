@@ -25,6 +25,18 @@ body{
 	width: 90%;
 }
 
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;

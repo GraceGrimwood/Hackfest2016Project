@@ -18,7 +18,7 @@
 	<div id="site-wrapper">
 	  	<div id="nav">
 			<h1>Snackfest</h1>
-			<input id = "search" class="controls" tyep="text" placeholder ="Search box">
+			<input id = "search" class="controls" type="text" placeholder ="Search box">
 	  	</div>
 	
 	    <div id="map">
@@ -27,6 +27,9 @@
 
 	<!--  Scripts-->
 	<script src="js/jquery-3.1.0.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
+    </script>
+	<script src ="js/search.js"></script>
     <script>
         function initMap() {
           var mapDiv = document.getElementById('map');
@@ -34,16 +37,14 @@
               center: {lat: 44.540, lng: -78.546},
               zoom: 8
           });
+		  initAutocomplete()
         }
     </script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap">
-    </script>
-	<script src ="js/latitude.js"></script>
-	<script src ="js/search.js"></script>
+	
+	<!--<script src ="js/latitude.js"></script>--->
 	<script src ="js/site.js"></script>
+	
 <!-- 	<script src="js/init.js"></script> -->
-<!-- 	<script src = "js/display.js"></script> -->
-
 
 <!-- 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&libraries=visualization&callback=initialize">
 	</script> -->
