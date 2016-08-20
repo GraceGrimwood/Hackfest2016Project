@@ -3,20 +3,16 @@
   <head>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
-  <body>
-    <h3>Heading</h3>
+  <body align = "center">
+    <h1>NZ Housing Market</h1>
+	<div id="searchBar">
+		//this is where the nav bar on the side to search for a specific region + filters is going
+	</div>
     <div id="map"></div>
-    <script>
-      function initMap() {
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-            center: {lat: 44.540, lng: -78.546},
-            zoom: 8
-        });
-      }
+    <script src = "display.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap">
     </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap">
-    </script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&libraries=visualization&callback=initialize">
+	</script>
   </body>
 </html>
