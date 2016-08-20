@@ -26,6 +26,10 @@ def api_regions():
 def api_region(region):
 	return parse_region(region)
 
+@route('/api/region/<region>/population')   # Population of each region
+def api_population_region(population):
+	return parse_population_region(population)
+
 @route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root = 'static\\')
@@ -58,13 +62,9 @@ def parse_region(region):
     for line in region_file:
         keys = line.split('",')
 
-        print(keys)
-
         for k in range(len(keys)):
             keys[k] = keys[k].replace("\"", "")   #Remove quotes around string
             keys[k] = keys[k].replace("\n", "")
-
-        print(keys)
 
         suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
         'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
@@ -73,5 +73,21 @@ def parse_region(region):
 
     return json.dumps(suburb_list)
 
+def parse_population_region(population):
+    pop_file = open(population)
+    pop_list = []
+
+    next(pop_file)  #Remove the first line
+
+    for line in pop_file:
+        keys = line.split('",')
+
+        print (keys)
+
+        district_info = {'District': keys[0], 'Population': keys[4]}
+
+        pop_list.append(district_info)
+
+    return json.dumps(pop_list)
 
 run(host = 'localhost', port = 8080, debug = True)
