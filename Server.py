@@ -17,7 +17,6 @@ def api_region(region):
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
-'''
 def prices_to_colours(District):
 
     var max_price
@@ -33,7 +32,7 @@ def prices_to_colours(District):
     var green = red < blue ? blue - red : blue
 
     return red + "," + green + "," + blue
-'''
+
 
 def list_all_regions():
     regions = os.listdir("PropertyCVSData")
