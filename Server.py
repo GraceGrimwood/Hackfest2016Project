@@ -9,7 +9,7 @@ def route_to_index():
 def api_suburbs():
 	return list_all_suburbs()
 
-@route('/static/<filename>')
+@route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
