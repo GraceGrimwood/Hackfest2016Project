@@ -25,6 +25,10 @@ def api_regions():
 @route('/api/region/<region>')
 def api_region(region):
 	return parse_region(region)
+	
+@route('/api/region/<region>/colourmap')
+def api_colours(region):
+	return region_to_colourmap(region)
 
 @route('/api/region/<region>/population')   # Population of each region
 def api_population_region(population):
@@ -34,11 +38,27 @@ def api_population_region(population):
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
-#def region_to_colourmap(region):
+def region_to_colourmap(region_name):
+	region_obj = region(region_name, None)
+	suburb_json = json.loads(parse_region(region_name))
+	name_indx = -1
+	price_indx = -1
+	for categ in suburb_json:
+		suburb_obj = suburb(None, None, region_obj)
+		for i in range(len(categ)):
+			if categ[i] == 'Suburb':
+				name_indx = i
+			if categ[i] == 'Median Sale Price':
+				price_indx = i
+			if name_indx !== -1 and i == name_indx:
+				suburb_obj.name = categ[i]
+			if price_indx !== -1 and i == price_indx:
+				suburb_obj.price = categ[i]
+	#region_obj = region(region_name,)
+	return 0
 	
-	
-def suburb_to_colour(suburb):
-    col_modifier = 255 * (suburb.price - min_price) / (max_price - min_price)
+def suburb_to_colour(suburb_obj):
+    col_modifier = 255 * (suburb_obj.price - min_price) / (max_price - min_price)
     red = 0 + col_modifier
     blue_modifier = red / 100
     blue = abs(255 - col_modifier * blue_modifier)
@@ -55,23 +75,36 @@ def list_all_regions():
     return json.dumps(regions)
 
 def parse_region(region):
-    region_file = open("PropertyCVSData/" + region + ".csv")
-    suburb_list = []
+	region_file = open("PropertyCVSData/" + region + ".csv")
+	suburb_list = []
+	next(region_file)	#Remove the first line
+	for line in region_file:
+		keys = line.split('",')
 
-    next(region_file)   #Remove the first line
-    for line in region_file:
-        keys = line.split('",')
+		print(keys)
 
+<<<<<<< HEAD
         for k in range(len(keys)):
             keys[k] = keys[k].replace("\"", "")   #Remove quotes around string
             keys[k] = keys[k].replace("\n", "")
 
         suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
+=======
+		for k in range(len(keys)):
+			keys[k] = keys[k].replace("\"", "")	#Remove quotes around string
+			keys[k] = keys[k].replace("\n", "")
+			keys[k] = keys[k].replace("$", "")
+			keys[k] = keys[k].replace(",", "")
+
+		print(keys)
+
+		suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
+>>>>>>> colour
         'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
         'Capital Value Date': keys[4]}
-        suburb_list.append(suburb_info)
-
-    return json.dumps(suburb_list)
+		suburb_list.append(suburb_info)
+	region_file.close()
+	return json.dumps(suburb_list)
 
 def parse_population_region(population):
     pop_file = open(population)
