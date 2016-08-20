@@ -3,12 +3,24 @@
   <head>
     <link rel="stylesheet" type="text/css" href="style.css">
 	<script src = "jquery-3.1.0.slim.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+	<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+	<script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+	
+	
   </head>
   <body align = "center">
     <h1>NZ Housing Market</h1>
 	
-	<div id="searchBar">
-		//this is where the nav bar on the side to search for a specific region + filters is going
+	<div id ="nav">
+		 <form>
+			<div class="input-field">
+			  <input id="search" type="search" required>
+			  <label for="search"><i class="material-icons">search</i></label>
+			  <i class="material-icons">close</i>
+			</div>
+      </form>
 	</div>
 	
     <div id="map"></div>
