@@ -30,7 +30,7 @@ def api_region(region):
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
-def region_to_colourmap(region):
+#def region_to_colourmap(region):
 	
 	
 def suburb_to_colour(suburb):
