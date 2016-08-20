@@ -5,9 +5,13 @@ from bottle import route, run, static_file, get, post, request, redirect, os
 def route_to_index():
 	redirect('static/index.html')
 
-@route('/api/suburbs')
-def api_suburbs():
-	return list_all_suburbs()
+@route('/api/regions')
+def api_regions():
+	return list_all_regions()
+
+@route('/api/region/<region>')
+def api_region(region):
+	return parse_region(region)
 
 @route('/static/<filename>')
 def server_static(filename):
@@ -31,15 +35,36 @@ def prices_to_colours(District):
     return red + "," + green + "," + blue
 '''
 
-def list_all_suburbs():
-    suburbs = os.listdir("PropertyCVSData")
+def list_all_regions():
+    regions = os.listdir("PropertyCVSData")
 
-    for i in range(len(suburbs)):
-        suburbs[i] = suburbs[i][:-4]
+    for i in range(len(regions)):
+        regions[i] = regions[i][:-4]
 
-    return json.dumps(suburbs)
-#def search_district():
+    return json.dumps(regions)
 
+def parse_region(region):
+    region_file = open("PropertyCVSData/" + region + ".csv")
+    suburb_list = []
+
+    next(region_file)   #Remove the first line
+    for line in region_file:
+        keys = line.split('",')
+
+        print(keys)
+
+        for k in range(len(keys)):
+            keys[k] = keys[k].replace("\"", "")   #Remove quotes around string
+            keys[k] = keys[k].replace("\n", "")
+
+        print(keys)
+
+        suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
+        'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
+        'Capital Value Date': keys[4]}
+        suburb_list.append(suburb_info)
+
+    return json.dumps(suburb_list)
 
 
 run(host = 'localhost', port = 8080, debug = True)
