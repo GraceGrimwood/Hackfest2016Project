@@ -1,3 +1,5 @@
+					var latitude;
+					var longitude;
 					$(document).ready(function() {
 
 					// url to find latitude and longitude based on suburbs.
