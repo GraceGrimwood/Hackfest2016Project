@@ -33,13 +33,13 @@ def server_static(filename):
 #def region_to_colourmap(region):
 	
 	
-def suburb_to_colour(suburb):
-    col_modifier = 255 * (suburb.price - min_price) / (max_price - min_price)
-    red = 0 + col_modifier
-    blue_modifier = red / 100
-    blue = abs(255 - col_modifier * blue_modifier)
-    green = red < blue ? blue - red : blue
-    return red + "," + green + "," + blue
+#def suburb_to_colour(suburb):
+#    col_modifier = 255 * (suburb.price - min_price) / (max_price - min_price)
+#    red = 0 + col_modifier
+#    blue_modifier = red / 100
+#    blue = abs(255 - col_modifier * blue_modifier)
+#    green = red < blue ? blue - red : blue
+#    return red + "," + green + "," + blue
 
 
 def list_all_regions():
