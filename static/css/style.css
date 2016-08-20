@@ -1,12 +1,14 @@
+#site-wrapper{
+	
+}
 #map {
         width: 80%;
         height: 700px;
 		margin: auto;
-		margin-left: 200px;
-		float: right;
+		float: left;
      }
 	 
 #nav {
-	width: 25%;
+	width: 20%;
 	float: left;
 }
