@@ -18,3 +18,18 @@ function initialize(map) {
 		}
 	}); 
 }
+
+function rgbtohex(rgbval){
+	red = rgbval.split(",")[0];
+	green=rgbval.split(",")[1];
+	blue=rgbval.split(",")[2];
+	return "#" +componenttohex(red) + componenttohex(green) + componenttohex(blue);
+}
+
+function componenttohex(c){
+	var hex = c.toString(16);
+	return hex.length===1 ? '0' + hex : hex;
+	
+	
+	
+}
