@@ -50,10 +50,8 @@
 
 	<!--  Scripts-->
 	<script src="js/jquery-3.1.0.min.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
-    </script>
 	<script src ="js/search.js"></script>
-	<!--<script src ="js/latitude.js"></script>-->
+	<script src ="js/latitude.js"></script>
 	
 	<div id = "key">
 		<h1>Key:<h1>
@@ -126,12 +124,13 @@
 			]]
           });
 		  initAutocomplete(map);
-		  //initialise(map);
+		  initialize(map);
 		  var keyElement = document.getElementById('key');
 		 map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(keyElement);  
         }
     </script>
-	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
+    </script>
 	<!--<script src ="js/latitude.js"></script>--->
 	<script src ="js/site.js"></script>
 	
