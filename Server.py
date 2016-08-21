@@ -52,60 +52,64 @@ def get_region_minmax(region_obj):
 			min_price = sub.price
 		elif sub.price > max_price:
 			max_price = sub.price
-	return [min_price, max_price]
+	return [int(min_price), int(max_price)]
 
 def get_region_avg(region_obj):
 	assert region_obj.suburbs != None
+	if len(region_obj.suburbs) == 0:
+		return -1
 	avg = pos_inf
-	for sub in region_obj.suburbs:
-		avg += sub.price
+	for i in range(len(region_obj.suburbs)):
+		avg += region_obj.suburbs[i].price
 	avg = avg/len(region_obj.suburbs)
-	return avg
+	return int(avg)
 
 def region_summary(region_name):
 	suburb_json = json.loads(parse_region(region_name))
 	region_obj = region()
 	region_obj._init_(region_name, None)
-	suburb_list = [len(suburb_json)]
-	indx = 0
+	region_obj.suburbs = [len(suburb_json)]
+	suburb_list = []
 	name_indx = -1
 	price_indx = -1
 	for categ in suburb_json:
 		suburb_obj = suburb()
 		suburb_obj._init_(None, None, None)
-		print(categ)
-		suburb_obj.name = categ.get('Suburb')
-		suburb_obj.price = int(categ.get('Median Sale Price'))
+		suburb_obj.name = categ.get("Suburb")
+		suburb_obj.price = categ.get("Median_Sale_Price")
+		suburb_obj.region = region_obj
 		if suburb_obj.name != None and suburb_obj.price != None:
-			suburb_list[indx] = suburb_obj
+			suburb_obj.price = int(suburb_obj.price)
+			suburb_list.append(suburb_obj)
+	
 	region_obj.suburbs = suburb_list
-	region_obj.average = get_region_avg(region_name)
-	rminmax = get_region_minmax(region_name)
+	region_obj.average = get_region_avg(region_obj)
+	rminmax = get_region_minmax(region_obj)
 	region_obj.min_price = rminmax[0]
 	region_obj.max_price = rminmax[1]
 	return region_obj
 
 def region_to_colourmap(region_name):
 	region_obj = region_summary(region_name)
+	region_map = []
 	for sub in region_obj.suburbs:
 		color = suburb_to_colour(sub)
-		suburb_map = {'Suburb': sub.name, 'Price': sub.price, ''''Population': get_popn(sub.name),''' 'Color': color}
-	return json.dumps(suburb_map)
+		suburb_map = [{'Suburb': sub.name}, {'Price': sub.price}, {'Color': color}, {'Region_min': region_obj.min_price}, {'Region_max': region_obj.max_price}, {'Region_avg': region_obj.average}]
+		region_map.append(suburb_map)
+	return json.dumps(region_map)
 	
 def suburb_to_colour(suburb_obj):
-	print(dir(suburb_obj))
-	sys.stdout.flush()
-	if suburb_obj != None:
-		print("\nYay\n")
-	col_modifier = 255 * (suburb_obj.price - 
-	red = 0 + col_modifier
+	col_modifier = 255 * ((suburb_obj.price - suburb_obj.region.min_price) / (suburb_obj.region.max_price - suburb_obj.region.min_price))
+	red = col_modifier
 	blue_modifier = red / 100
 	blue = abs(255 - col_modifier * blue_modifier)
+	if blue > 255:
+		blue -= 255
 	if red < blue:
 		green = blue - red
 	else:
 		green = blue
-	return str(red) + "," + str(green) + "," + str(blue)
+	return str(int(red)) + "," + str(int(green)) + "," + str(int(blue))
 
 
 def list_all_regions():
