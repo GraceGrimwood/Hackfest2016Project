@@ -1,5 +1,8 @@
 import json
+import sys
 from bottle import route, run, static_file, get, post, request, redirect, os
+
+pos_inf = 999999999
 
 class suburb(object):
 	def _init_(self,name,price,region):
@@ -8,11 +11,13 @@ class suburb(object):
 		self.region = region
 		
 class region(object):
-	def _init_(self,name,suburbs):
+	def _init_(self,name = 'region', suburbs = None):
 		self.name = name
 		self.suburbs = suburbs
-		self.minprice = int(float('inf'))
-		self.maxprice = 0
+		self.average = 0
+		self.max_price = 0
+		self.min_price = pos_inf
+
 
 @route('/')
 def route_to_index():
@@ -38,32 +43,69 @@ def api_population_region(population):
 def server_static(filename):
     return static_file(filename, root = 'static\\')
 
-def region_to_colourmap(region_name):
-	region_obj = region(region_name, None)
+def get_region_minmax(region_obj):
+	assert region_obj.suburbs != None
+	min_price = pos_inf
+	max_price = 0
+	for sub in region_obj.suburbs:
+		if sub.price < min_price:
+			min_price = sub.price
+		elif sub.price > max_price:
+			max_price = sub.price
+	return [min_price, max_price]
+
+def get_region_avg(region_obj):
+	assert region_obj.suburbs != None
+	avg = pos_inf
+	for sub in region_obj.suburbs:
+		avg += sub.price
+	avg = avg/len(region_obj.suburbs)
+	return avg
+
+def region_summary(region_name):
 	suburb_json = json.loads(parse_region(region_name))
+	region_obj = region()
+	region_obj._init_(region_name, None)
+	suburb_list = [len(suburb_json)]
+	indx = 0
 	name_indx = -1
 	price_indx = -1
 	for categ in suburb_json:
-		suburb_obj = suburb(None, None, region_obj)
-		for i in range(len(categ)):
-			if categ[i] == 'Suburb':
-				name_indx = i
-			if categ[i] == 'Median Sale Price':
-				price_indx = i
-			if name_indx !== -1 and i == name_indx:
-				suburb_obj.name = categ[i]
-			if price_indx !== -1 and i == price_indx:
-				suburb_obj.price = categ[i]
-	#region_obj = region(region_name,)
-	return 0
+		suburb_obj = suburb()
+		suburb_obj._init_(None, None, None)
+		print(categ)
+		suburb_obj.name = categ.get('Suburb')
+		suburb_obj.price = int(categ.get('Median Sale Price'))
+		if suburb_obj.name != None and suburb_obj.price != None:
+			suburb_list[indx] = suburb_obj
+	region_obj.suburbs = suburb_list
+	region_obj.average = get_region_avg(region_name)
+	rminmax = get_region_minmax(region_name)
+	region_obj.min_price = rminmax[0]
+	region_obj.max_price = rminmax[1]
+	return region_obj
+
+def region_to_colourmap(region_name):
+	region_obj = region_summary(region_name)
+	for sub in region_obj.suburbs:
+		color = suburb_to_colour(sub)
+		suburb_map = {'Suburb': sub.name, 'Price': sub.price, ''''Population': get_popn(sub.name),''' 'Color': color}
+	return json.dumps(suburb_map)
 	
 def suburb_to_colour(suburb_obj):
-    col_modifier = 255 * (suburb_obj.price - min_price) / (max_price - min_price)
-    red = 0 + col_modifier
-    blue_modifier = red / 100
-    blue = abs(255 - col_modifier * blue_modifier)
-    green = red < blue if blue - red else blue
-    return red + "," + green + "," + blue
+	print(dir(suburb_obj))
+	sys.stdout.flush()
+	if suburb_obj != None:
+		print("\nYay\n")
+	col_modifier = 255 * (suburb_obj.price - 
+	red = 0 + col_modifier
+	blue_modifier = red / 100
+	blue = abs(255 - col_modifier * blue_modifier)
+	if red < blue:
+		green = blue - red
+	else:
+		green = blue
+	return str(red) + "," + str(green) + "," + str(blue)
 
 
 def list_all_regions():
@@ -92,9 +134,9 @@ def parse_region(region):
 
 		print(keys)
 
-		suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
-        'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
-        'Capital Value Date': keys[4]}
+		suburb_info = {'Suburb': keys[0], 'Number_of_Sales': keys[1],
+        'Median_Sale_Price': keys[2], 'Difference_Between_Sales_Price_and_CV': keys[3],
+        'Capital_Value_Date': keys[4]}
 		suburb_list.append(suburb_info)
 	region_file.close()
 	return json.dumps(suburb_list)
