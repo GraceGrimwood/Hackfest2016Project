@@ -6,7 +6,7 @@ function initialize(map) {
 		for(i=0;i<suburbPositions.length;i++){	
 			var myCity = new google.maps.Circle({
 			  center:suburbPositions[i].center,
-			  radius:3000,
+			  radius:2000,
 			  strokeColor:"#0000FF",
 			  strokeOpacity:0.3,
 			  strokeWeight:2,
