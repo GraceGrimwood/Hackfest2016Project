@@ -89,13 +89,33 @@ def region_summary(region_name):
 	region_obj.min_price = rminmax[0]
 	region_obj.max_price = rminmax[1]
 	return region_obj
+	
+def get_sub_latlon(suburb_obj):
+	latlon_json = open('Population/SuburbsLatlon.json')
+	latlon_data = json.loads(latlon_json.read())
+	latlon_json.close()
+	suburb_latlon = None
+	suburb_name = None
+	for categ in latlon_data:
+		suburb_name = categ.get('name')
+		if suburb_obj.name == suburb_name:
+			print(suburb_name + ", " + suburb_obj.name)
+			suburb_latlon = categ.get('center')
+			lat = suburb_latlon.get('lat')
+			lon = suburb_latlon.get('lng')
+			print(suburb_latlon)
+	return suburb_latlon
 
 def region_to_colourmap(region_name):
 	region_obj = region_summary(region_name)
 	region_map = []
 	for sub in region_obj.suburbs:
+		get_sub_latlon(sub)
 		color = suburb_to_colour(sub)
-		suburb_map = [{'Suburb': sub.name}, {'Price': sub.price}, {'Color': color}, {'Region_min': region_obj.min_price}, {'Region_max': region_obj.max_price}, {'Region_avg': region_obj.average}]
+		print(sub.name)
+		center = get_sub_latlon(sub)
+		print(center)
+		suburb_map = {'Suburb': sub.name, 'center': center, 'Price': sub.price, 'Color': color, 'Region_min': region_obj.min_price, 'Region_max': region_obj.max_price, 'Region_avg': region_obj.average}
 		region_map.append(suburb_map)
 	return json.dumps(region_map)
 	
