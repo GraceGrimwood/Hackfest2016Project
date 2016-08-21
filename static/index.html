@@ -62,23 +62,18 @@
 	</div>
 
 	<!--  Scripts-->
-
-
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
-    </script>
+	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src ="js/search.js"></script>
 	<script src ="js/latitude.js"></script>
+	
+	<div id = "key">
+		<h1>Key:<h1>
+	</div>
     <script>
         function initMap() {
-		  var url="https://maps.googleapis.com/maps/api/geocode/json?address=Chertsey,NZ&key=AIzaSyB_g5IBb2LXiYkRRWnjZfLGivlXG-xZ-Fc";
-		  $.getJSON(url, function (response){
-		  var latitude=response.results[0].geometry.location.lat;
-		  var longitude=response.results[0].geometry.location.lng;
-	   	  var place=new google.maps.LatLng(latitude,longitude);
           var mapDiv = document.getElementById('map');
-		  
           var map = new google.maps.Map(mapDiv, {
-			center: place,
+			center: {lat: -43.8025914, lng: 171.93542879999995},
 			zoom:7,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 			styles: [[{featureType:"administrative",
@@ -142,11 +137,13 @@
 			]]
           });
 		  initAutocomplete(map);
-		  // initialise(map);
-		  })
+		  initialize(map);
+		  var keyElement = document.getElementById('key');
+		 map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(keyElement);  
         }
     </script>
-	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
+    </script>
 	<!--<script src ="js/latitude.js"></script>--->
 	<script src ="js/site.js"></script>
 	
