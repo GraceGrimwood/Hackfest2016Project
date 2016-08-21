@@ -35,10 +35,11 @@ def api_region(region):
 def api_colours(region):
 	return region_to_colourmap(region)
 
+"""""
 @route('/api/region/<region>/population')   # Population of each region
-def api_population_region(population):
-	return parse_population_region(population)
-
+def api_population_region(region):
+	return parse_population_region(region)
+"""
 @route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root = 'static\\')
@@ -88,13 +89,33 @@ def region_summary(region_name):
 	region_obj.min_price = rminmax[0]
 	region_obj.max_price = rminmax[1]
 	return region_obj
+	
+def get_sub_latlon(suburb_obj):
+	latlon_json = open('Population/SuburbsLatlon.json')
+	latlon_data = json.loads(latlon_json.read())
+	latlon_json.close()
+	suburb_latlon = None
+	suburb_name = None
+	for categ in latlon_data:
+		suburb_name = categ.get('name')
+		if suburb_obj.name == suburb_name:
+			print(suburb_name + ", " + suburb_obj.name)
+			suburb_latlon = categ.get('center')
+			lat = suburb_latlon.get('lat')
+			lon = suburb_latlon.get('lng')
+			print(suburb_latlon)
+	return suburb_latlon
 
 def region_to_colourmap(region_name):
 	region_obj = region_summary(region_name)
 	region_map = []
 	for sub in region_obj.suburbs:
+		get_sub_latlon(sub)
 		color = suburb_to_colour(sub)
-		suburb_map = [{'Suburb': sub.name}, {'Price': sub.price}, {'Color': color}, {'Region_min': region_obj.min_price}, {'Region_max': region_obj.max_price}, {'Region_avg': region_obj.average}]
+		print(sub.name)
+		center = get_sub_latlon(sub)
+		print(center)
+		suburb_map = {'Suburb': sub.name, 'center': center, 'Price': sub.price, 'Color': color, 'Region_min': region_obj.min_price, 'Region_max': region_obj.max_price, 'Region_avg': region_obj.average}
 		region_map.append(suburb_map)
 	return json.dumps(region_map)
 	
@@ -120,46 +141,53 @@ def list_all_regions():
 
     return json.dumps(regions)
 
+
 def parse_region(region):
-	region_file = open("PropertyCVSData/" + region + ".csv")
-	suburb_list = []
-	next(region_file)	#Remove the first line
-	for line in region_file:
-		keys = line.split('",')
+    region_file = open("PropertyCVSData/" + region + ".csv")
+    suburb_list = []
 
-		print(keys)
-
-
-		for k in range(len(keys)):
-			keys[k] = keys[k].replace("\"", "")	#Remove quotes around string
-			keys[k] = keys[k].replace("\n", "")
-			keys[k] = keys[k].replace("$", "")
-			keys[k] = keys[k].replace(",", "")
-
-		print(keys)
-
-		suburb_info = {'Suburb': keys[0], 'Number_of_Sales': keys[1],
-        'Median_Sale_Price': keys[2], 'Difference_Between_Sales_Price_and_CV': keys[3],
-        'Capital_Value_Date': keys[4]}
-		suburb_list.append(suburb_info)
-	region_file.close()
-	return json.dumps(suburb_list)
-
-def parse_population_region(population):
-    pop_file = open(population)
+    pop_file = open("DistrictPopulation/DistrictPop.csv")
     pop_list = []
 
-    next(pop_file)  #Remove the first line
+    next(pop_file)
 
     for line in pop_file:
         keys = line.split('",')
+        for k in range(len(keys)):
+            keys[k] = keys[k].replace("\"", "")
+            keys[k] = keys[k].replace(',', "")
 
-        print (keys)
+        suburb_pop = {'Suburb': keys[0], 'Population': keys[4]}
+        pop_list.append(suburb_pop)
 
-        district_info = {'District': keys[0], 'Population': keys[4]}
+    next(region_file)
+    for line in region_file:
+        keys = line.split('",')
 
-        pop_list.append(district_info)
+        for k in range(len(keys)):
+            keys[k] = keys[k].replace("\"", "")	# Remove unnecessary info
+            keys[k] = keys[k].replace("\n", "")
+            keys[k] = keys[k].replace("$", "")
+            keys[k] = keys[k].replace(",", "")
 
-    return json.dumps(pop_list)
+
+        suburb_info = {'Suburb': keys[0], 'Number of Sales': keys[1],
+        'Median Sale Price': keys[2], 'Difference Between Sales Price and CV': keys[3],
+        'Capital Value Date': keys[4], 'Population': -1}
+        suburb_list.append(suburb_info)
+
+    for sub_dict in suburb_list:
+        for pop_dict in pop_list:
+            #if sub_dict['Population'].find()
+             #if sub_dict['Suburb'] in pop_dict:
+            #for pop_dict_key in pop_dict:
+            if pop_dict['Suburb'] == sub_dict['Suburb']:
+
+                #if pop_dict_key.find(sub_dict['Suburb']) != 1 or sub_dict['Suburb'].find(pop_dict_key) != 1:
+                sub_dict['Population'] = pop_dict['Population']
+                sub_dict['Population'] = sub_dict['Population'].replace("\n", "")
+
+    region_file.close()
+    return json.dumps(suburb_list)
 
 run(host = 'localhost', port = 8080, debug = True)
