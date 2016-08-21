@@ -32,7 +32,7 @@ var progressMargin = 5;
 function setup () {
 
     // in the js file:
-    var MSPCanvas = createCanvas(200,20);
+    var MSPCanvas = createCanvas(250,15);
     MSPCanvas.parent("rs1");
     
 }
@@ -42,13 +42,13 @@ function draw () {
     baseBar();
     wholeBar();
     progressBar();
-    println(medianSalesPrice);
+    // println(medianSalesPrice);
 }
 
 function baseBar(){
     push();
     noStroke();
-    fill(20); 
+    fill('#233142'); 
     rect(0,0, canvas.width, canvas.height, canvas.height);
     pop();
 }
@@ -56,7 +56,7 @@ function baseBar(){
 function progressBar(){
     push();
     noStroke();
-    fill(200); 
+    fill('#A7F76F'); 
     rect(progressMargin/2,progressMargin/2, canvas.width-50, canvas.height-progressMargin, canvas.height,0,0,canvas.height);
     pop();
 }
@@ -64,7 +64,7 @@ function progressBar(){
 function wholeBar(){
     push();
     noStroke();
-    fill(80); 
+    fill('#4A5872'); 
     rect(progressMargin/2,progressMargin/2, canvas.width-progressMargin, canvas.height-progressMargin, canvas.height,canvas.height,canvas.height,canvas.height);
     pop();
 }
