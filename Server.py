@@ -31,7 +31,7 @@ def api_regions():
 def api_region(region):
 	return parse_region(region)
 	
-@route('/api/region/<region>/colourmap')
+@route('/api/region/<region>/colourmap.json')
 def api_colours(region):
 	return region_to_colourmap(region)
 
