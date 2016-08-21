@@ -38,6 +38,11 @@ body{
   font-weight: 300;
 }
 
+#key{
+	background-color: #000;
+	color: #fff;
+}
+
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
