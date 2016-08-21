@@ -1,10 +1,4 @@
 function initAutocomplete(map) {
-  /*var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });*/
-
   // Create the search box and link it to the UI element.
   var input = document.getElementById('search');
   var searchBox = new google.maps.places.SearchBox(input);
