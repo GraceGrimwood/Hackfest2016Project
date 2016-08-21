@@ -48,6 +48,12 @@ body{
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
+.stats {
+	width: 100%;
+	background-color: #fff;
+	color: #000;
+}
+
 #map {
     width: 80%;
     height: 700px;
