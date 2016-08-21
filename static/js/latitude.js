@@ -1,13 +1,14 @@
 function initialize(map) {	
 	console.log(map);
 	var suburbPositions=[];
-	$.getJSON("/static/js/SuburbsLatlon.json", function(data){
+	$.getJSON("/api/region/Ashburton/colourmap.json", function(data){
+		
 		suburbPositions=data;
-		for(i=0;i<suburbPositions.length;i++){	
+		for(i=0;i<suburbPositions.length;i++){
 			var myCity = new google.maps.Circle({
 			  center:suburbPositions[i].center,
 			  radius:2000,
-			  strokeColor:"#0000FF",
+			  strokeColor: rgbtohex(suburbPositions[i].Color),
 			  strokeOpacity:0.3,
 			  strokeWeight:2,
 			  fillColor:"#0000FF",
@@ -20,16 +21,14 @@ function initialize(map) {
 }
 
 function rgbtohex(rgbval){
-	red = rgbval.split(",")[0];
-	green=rgbval.split(",")[1];
-	blue=rgbval.split(",")[2];
+	console.log(rgbval);
+	var red = rgbval.split(",")[0];
+	var green=rgbval.split(",")[1];
+	var blue=rgbval.split(",")[2];
 	return "#" +componenttohex(red) + componenttohex(green) + componenttohex(blue);
 }
 
 function componenttohex(c){
 	var hex = c.toString(16);
 	return hex.length===1 ? '0' + hex : hex;
-	
-	
-	
 }
