@@ -16,6 +16,7 @@ body{
 
 #search{
 	background-color: #fff;
+	border-radius: 3px;
 	font-family: Roboto;
 	font-size: 15px;
 	font-weight: 300;
@@ -95,6 +96,11 @@ body{
 			margin: auto;
 			float: left;
 		}	 
+		
+		.stats {
+			overflow: scroll;
+			height: 30%;
+		}
 
     }
 
