@@ -140,7 +140,7 @@ def suburb_to_colour(suburb_obj):
 		green = blue
 	
 	rgb = (red, green, blue)
-    return '#%02x%02x%02x' % rgb
+	return '#%02x%02x%02x' % rgb
 
 
 def list_all_regions():
