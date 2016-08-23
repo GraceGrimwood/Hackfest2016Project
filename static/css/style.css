@@ -1,27 +1,149 @@
 body{
 	margin:0;
+	font-family: 'Raleway', sans-serif;
+}
+
+h1{
+	font-weight:400;
+}
+
+
+.boldText{
+	font-weight: bold;
 }
 
 #site-wrapper{
+	
+}
+
+#topNav{
+	background-color: #233142;
+	height:40px;
+	padding: 15px 20px;
+	text-align:left;
+}
+
+
+#topNav h1{
+	padding:0px;
+	margin:0;	
 
 }
 
+#searchNav {
+    height: 135px;
+    background-color: #4a5872;
+}
+
+#searchButton{
+	font-family: Raleway, sans-serif;
+	border: 2px solid white;
+	background-color: #4a5872;
+	color: white;
+	text-transform: uppercase;
+	font-weight: 500;
+	font-size: 16px;
+	/* padding: 5px; */
+	margin-top: 20px;
+	border-radius: 8px;
+	width: 90%;
+	height: 35px;
+}
+
+
 #nav {
-	width: 20%;
-    height: 700px;
+	width: 30%;
+	height: 700px;
 	float: left;
 	color:white;
-	background-color:black;
+	background-color:white;
+}
+
+#search{
+	background-color: #fff;
+	border-radius: 8px;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+	padding: 0 11px 0 13px;
+	text-overflow: ellipsis;
+	width: 90%;
+	font-family: Raleway, sans-serif;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#key{
+	background-color: #000;
+	color: #fff;
+	margin: 10px;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+.value{
+	color:#4a5872;
+	font-size: 32px;
+	margin: 10px;
+	font-weight: 300;
+}
+
+.description{
+	color:#4a5872;
+}
+
+.controls {
+  margin-top: 20px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); */
+}
+.icon{
+	float:left;
+	width: 80px;
+	height: 80px;
+	background-color: #4a5872;
+	border-radius: 100%;
+	margin: 20px;
+}
+
+.stats {
+	width: 100%;
+	background-color: #fff;
+	color: #000;
+	text-align: left;
+	float:left;
 }
 
 #map {
-    width: 80%;
+    width: 70%;
     height: 700px;
-	margin: auto;
-	float: left;
+    margin: auto;
+    float: left;
 }
 	 
-
+#regionName{
+	
+text-transform: uppercase;
+	
+color: #4a5872;
+	
+font-size: 24px;
+}
  /*==========  Non-Mobile First Method  ==========*/
 
     /* Large Devices, Wide Screens */
