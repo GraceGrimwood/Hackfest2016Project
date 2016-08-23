@@ -5,10 +5,11 @@ from bottle import route, run, static_file, get, post, request, redirect, os
 pos_inf = 999999999
 
 class suburb(object):
-	def _init_(self,name,price,region):
+	def _init_(self,name,price,region,pop):
 		self.name = name
 		self.price = price
 		self.region = region
+		self.pop = pop
 		
 class region(object):
 	def _init_(self,name = 'region', suburbs = None):
@@ -83,7 +84,7 @@ def region_summary(region_name):
 		suburb_obj.name = categ.get("Suburb")
 		suburb_obj.price = categ.get("Median_Sale_Price")
 		suburb_obj.region = region_obj
-		
+		suburb_obj.pop = categ.get("Population")
 		if suburb_obj.name != None and suburb_obj.price != None:
 			suburb_obj.price = int(suburb_obj.price)
 			suburb_list.append(suburb_obj)
@@ -123,7 +124,7 @@ def region_to_colourmap(region_name):
 		get_sub_latlon(sub)
 		color = suburb_to_colour(sub)
 		center = get_sub_latlon(sub)
-		suburb_map = {'Suburb': sub.name, 'center': center, 'Price': sub.price, 'Color': color, 'Region_min': region_obj.min_price, 'Region_max': region_obj.max_price, 'Region_avg': region_obj.average}
+		suburb_map = {'Suburb': sub.name, 'center': center, 'Price': sub.price, 'Color': color, 'Region_min': region_obj.min_price, 'Region_max': region_obj.max_price, 'Region_avg': region_obj.average, 'Population': sub.pop}
 		region_map.append(suburb_map)
 	return region_map
 	
