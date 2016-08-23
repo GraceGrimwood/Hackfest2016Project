@@ -122,15 +122,25 @@ def region_to_colourmap(region_name):
 def suburb_to_colour(suburb_obj):
 	col_modifier = 255 * ((suburb_obj.price - suburb_obj.region.min_price) / (suburb_obj.region.max_price - suburb_obj.region.min_price))
 	red = col_modifier
+	while red > 255 or red < 0:
+		if red > 255:
+			red -= 255
+		elif red < 0:
+			red += 255
 	blue_modifier = red / 100
 	blue = abs(255 - col_modifier * blue_modifier)
-	if blue > 255:
-		blue -= 255
+	while blue > 255 or blue < 0:
+		if blue > 255:
+			blue -= 255
+		elif blue < 0:
+			blue += 255
 	if red < blue:
 		green = blue - red
 	else:
 		green = blue
-	return str(int(red)) + "," + str(int(green)) + "," + str(int(blue))
+	
+	rgb = (red, green, blue)
+    return '#%02x%02x%02x' % rgb
 
 
 def list_all_regions():
