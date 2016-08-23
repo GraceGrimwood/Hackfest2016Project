@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+		<title>Starter Template - Materialize</title>
+
+		<!-- CSS  -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+		<!-- jQuery -->
+		<script src="js/jquery-3.1.0.min.js"></script>
+		<!-- p5 JS Library for drawing sliders -->
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.1/p5.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.sound.min.js"></script>
+		<script language="javascript" type="text/javascript" src="js/relativeScale.js"></script>
+		
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	</head>
+
+
+
+
+	<body align="center">
+    
+  		
+	<div id="site-wrapper">
+	  	<div id="nav">
+	  		<div id="topNav">
+				<h1><span class="boldText">Proper</span>Snack</h1>
+			</div>
+
+			<div id="searchNav">
+				<input id = "search" class="controls" type="text" placeholder ="Search region">
+				<input type="submit" value="Submit" id="searchButton">
+			</div>
+			
+			<div id="bottomNav">
+				<h2 id="regionName">Fairton, Ashburton</h2>
+				<div class="stats">
+					<div class="icon"></div>
+					<h3 class="value">$310,000</h3>
+					<h4 class="description">Median Sales Price</h4>
+					<div id="rs1" class="progressBar">
+					</div>
+				</div>
+				<div class="stats">
+					<div class="icon"></div>
+					<h3 class="value">48,000</h3>
+					<h4 class="description">Population</h4>
+					<div id="rs2" class="progressBar">
+					</div>
+				</div>				
+				<div class="stats">
+					<div class="icon"></div>
+					<h3 class="value">+20%</h3>
+					<h4 class="description">Average Property Appreciation</h4>
+					<div id="rs3" class="progressBar">
+					</div>
+				</div>
+				<div class="stats">
+					<div class="icon"></div>
+					<h3 class="value">7</h3>
+					<h4 class="description">Number of Sales</h4>
+					<div id="rs4" class="progressBar">
+					</div>
+				</div>
+
+			</div>
+	  	</div>
+	
+	    <div id="map">
+	    </div>
+
+	    
+	</div>
+
+	<!--  Scripts-->
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src ="js/search.js"></script>
+	<script src ="js/latitude.js"></script>
+	
+	<div id = "key">
+		<h1>Key:<h1>
+	</div>
+    <script>
+        function initMap() {
+          var mapDiv = document.getElementById('map');
+          var curmap = new google.maps.Map(mapDiv, {
+			center: {lat: -43.8025914, lng: 171.93542879999995},
+			zoom:7,
+			mapTypeId:google.maps.MapTypeId.ROADMAP,
+			styles: [[{featureType:"administrative",
+			elementType:"all",
+			stylers:[{visibility:"on"}]
+			},{
+			featureType:"landscape",
+			elementType:"all",
+			stylers:[{hue:"#ff0300"},
+			{saturation:-100},
+			{lightness:129.33333333333334},
+			{gamma:1},
+			{visibility:"on"}]
+			},{
+			featureType:"poi",
+			elementType:"all",
+			stylers:[{hue:"#abff00"},
+			{saturation:61.80000000000001},
+			{lightness:13.800000000000011},
+			{gamma:1},
+			{visibility:"on"}]
+			},{
+			featureType:"road",
+			elementType:"all",
+			stylers:[{visibility:"off"}]
+			},{
+			featureType: "road.highway",
+			elementType: "labels.icon",
+			stylers: [{visibility: "off"}]
+			},{
+			featureType: "road.arterial",
+			elementType: "all",
+			stylers: [{hue: "#00b7ff"},
+			{saturation: -31.19999999999996},
+			{lightness: 2.1803921568627374},
+			{gamma: 1},
+			{visibility: "on"}]
+			},{
+			featureType: "road.local",
+			elementType: "all",
+			stylers: [{hue: "#00B5FF"},
+			{saturation: -33.33333333333343},
+			{lightness: 27.294117647058826},
+			{gamma: 1},
+			{visibility: "on"}]
+			},{
+			featureType:"transit.station.airport",
+			elementType:"all",
+			stylers:[{visibility:"on"}]
+			},{
+			featureType:"transit.station.bus",
+			elementType:"all",
+			stylers:[{visibility:"off"}]
+			},{
+			featureType:"water",
+			elementType:"all",
+			stylers:[{hue:"#00B7FF"},
+			{saturation:8.400000000000006},
+			{lightness:36.400000000000006},
+			{gamma:1}]}
+			]]
+          });
+		  initAutocomplete(curmap);
+		  initialize(curmap);
+		  var keyElement = document.getElementById('key');
+		 if(map.controls != undefined && map.controls[google.maps.ControlPosition.RIGHT_BOTTOM] != undefined){
+			map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(keyElement);  
+		 }
+        }
+    </script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&callback=initMap&libraries=places">
+    </script>
+	<!--<script src ="js/latitude.js"></script>--->
+	<script src ="js/site.js"></script>
+	<script src ="js/SuburbsLatlon.js"></script>
+	
+<!-- 	<script src="js/init.js"></script> -->
+
+<!-- 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv3KYXF1evdxZgdJbbUL_LioWuFToiicI&libraries=visualization&callback=initialize">
+	</script> -->
+	</body>
+</html>
+
+
+
+
